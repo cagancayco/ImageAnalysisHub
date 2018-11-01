@@ -28,6 +28,6 @@ function loadBurstParameters(app)
 
     app.AnalysisWindowsTable.Data = EventData(1).analysisWindows;
 
-    app.ThresholdMethodEditField.Value = EventData(1).thresholdMethod;
+    %app.ThresholdMethodEditField.Value = EventData(1).thresholdMethod;
 
 end

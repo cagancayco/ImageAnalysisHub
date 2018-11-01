@@ -72,7 +72,7 @@ function [data_struct, writeEventData] = loadData(app)
         % letsDetect    
         else
             
-            try
+            %try
                 fileName = dir(fullfile(inputDir,slices{i},'*ORAMA.mat'));
                 fileName = fullfile(inputDir,slices{i},fileName.name);
             
@@ -91,7 +91,7 @@ function [data_struct, writeEventData] = loadData(app)
                         data_struct(counter).events    = unique(sort(data.detectoramaOUT.events{j}(:,1)));
                         data_struct(counter).nSamples  = length(data_struct(counter).events);
                         data_struct(counter).trace     = data.detectoramaOUT.traces(:,j);
-                        data_struct(counter).frameRate = data.detectoramaOUT.frameRate;
+                        data_struct(counter).frameRate = data.detectoramaOUT.framerate;
                         data_struct(counter).sampInt = data.detectoramaOUT.si;
                         data_struct(counter).binTime = binTime;
                         data_struct(counter).startTime = startTime;
@@ -106,11 +106,11 @@ function [data_struct, writeEventData] = loadData(app)
                     counter = counter + 1;
                 end
             
-            catch
-                msgbox('Wrong detection algorithm selected.', 'Incorrect Detection Algorithm', 'error')
-                writeEventData = 0;
-                break
-            end
+%             catch
+%                 msgbox('Wrong detection algorithm selected.', 'Incorrect Detection Algorithm', 'error')
+%                 writeEventData = 0;
+%                 break
+%             end
             
         end
 

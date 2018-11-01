@@ -65,6 +65,11 @@ function runBurstAnalysis(app)
         switch runCell
         
             case 1
+                if app.ManualButton.Value
+                    newEventData(i).thresholdMethod = 'Manual';
+                    newEventData(i).threshold = app.ManualEditField.Value;
+                end
+                
                 newEventData(i).Bursts = FindBursts(newEventData(i));
                 if app.NumberofBurstsCheckBox.Value
                     if ~isempty(newEventData(i).Bursts)
@@ -104,6 +109,26 @@ function runBurstAnalysis(app)
                     else
                         newEventData(i).interburstInt = [];
                     end 
+                end
+                
+                if app.FractionofSingleEventsCheckBox.Value
+                    if ~isempty(newEventData(i).Bursts)
+                        newEventData(i).fracSingleEvents = FractionSingleEvents(newEventData(i));
+                    else
+                        if ~isempty(EventTimes(newEventData(i)))
+                            newEventData(i).fracSingleEvents = 1;
+                        else
+                            newEventData(i).fracSingleEvents = [];
+                        end
+                    end
+                end
+                
+                if app.TimetoFirstBurstCheckBox.Value
+                    if ~isempty(newEventData(i).Bursts)
+                        newEventData(i).timeFirstBurst = TimeFirstBurst(newEventData(i));
+                    else
+                        newEventData(i).timeFirstBurst = [];
+                    end
                 end
             case 0
         end
@@ -174,13 +199,19 @@ function runBurstAnalysis(app)
         if app.BurstFrequencyCheckBox.Value
             IntraBurstFreqXL(EventData, currSlice, sliceCells, sliceFile)
         end
-        
+        %% Interburst Interval
         if app.InterburstIntervalCheckBox.Value
-        % Interburst Frequency
             InterBurstIntXL(EventData, currSlice, sliceCells, sliceFile)
         end
-        %%
-
+        %% Fraction of Single Events
+        if app.FractionofSingleEventsCheckBox.Value
+            FractionSingleEventsXL(EventData, currSlice, sliceCells, sliceFile)
+        end
+        
+        %% Time to First Burst
+        if app.TimetoFirstBurstCheckBox.Value
+            TimeFirstBurstXL(EventData, currSlice, sliceCells, sliceFile)
+        end
     end
     
     delete(f)

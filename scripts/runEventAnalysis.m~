@@ -161,7 +161,7 @@ function runEventAnalysis(app)
                     newEventData(i).FrequencyPerBin = FrequencyPerBin(newEventData(i));
                 end
         
-                if app.EventTimingCheckBox.Value || app.CreateclusterFuncOutputCheckBox.Value
+                if app.EventTimingCheckBox.Value
                     newEventData(i).EventTiming = EventTimes(newEventData(i));
                 end
         
@@ -198,7 +198,9 @@ function runEventAnalysis(app)
                 end
                 
                 %disp([currCell.cellName,': It worked; ',num2str(threshold)])
-               
+                if 
+                    newEventData(i).clusterFunc
+                end
 
             case 0
                 %disp([currCell.cellName,': No events'])
@@ -334,10 +336,6 @@ function runEventAnalysis(app)
             FractionalATFirstLastXL(EventData, currSlice, sliceCells, sliceFile)
         end
         
-        %% clusterFunc Output
-        if app.CreateclusterFuncOutputCheckBox.Value
-            CreateClusterFuncOutput(EventData, currSlice, sliceCells, app.OutputDirectoryEditField.Value)
-        end
     end
     
 %     if ispc
