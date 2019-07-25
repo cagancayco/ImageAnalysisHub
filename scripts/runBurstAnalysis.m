@@ -79,6 +79,14 @@ function runBurstAnalysis(app)
                     end
                 end
                 
+                if app.BurstTimingCheckBox.Value
+                    if ~isempty(newEventData(i).Bursts)
+                        newEventData(i).burstTiming = BurstTiming(newEventData(i));
+                    else
+                        newEventData(i).burstTiming = [];
+                    end
+                end
+                
                 if app.EventsBurstCheckBox.Value
                     if ~isempty(newEventData(i).Bursts)
                         newEventData(i).nEventsPerBurst = EventsPerBurst(newEventData(i));
@@ -185,6 +193,10 @@ function runBurstAnalysis(app)
         %% Number of Bursts
         if app.NumberofBurstsCheckBox.Value
             NumBurstsXL(EventData, currSlice, sliceCells, sliceFile)
+        end
+        %% Burst Timing
+        if app.BurstTimingCheckBox.Value
+            BurstTimingXL(EventData, currSlice, sliceCells, sliceFile)
         end
         %% Events Per Burst
         if app.EventsBurstCheckBox.Value

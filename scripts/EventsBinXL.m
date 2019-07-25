@@ -1,10 +1,11 @@
 function EventsBinXL(EventData, currSlice, sliceCells, sliceFile)
 
     EventsBinHeaders = cell(1,numel(sliceCells));
-    EventsBinValues  = cell(numel([EventData(sliceCells(1)).EventsPerBin.events]),numel(sliceCells));
+    firstFullCell = find(~cellfun(@isempty,{EventData(sliceCells).EventsPerBin}));
+    EventsBinValues  = cell(numel([EventData(sliceCells(firstFullCell(1))).EventsPerBin.events]),numel(sliceCells));
     EventsBinTotals  = cell(1,numel(sliceCells));
             
-    EventsBins = [{'Bins'};{EventData(sliceCells(1)).EventsPerBin.bins}'];
+    EventsBins = [{'Bins'};{EventData(sliceCells(firstFullCell(1))).EventsPerBin.bins}'];
     TotalCells = 0;        
     for k = 1:numel(sliceCells)
         EventsBinHeaders{k}  = EventData(sliceCells(k)).cellName(length(currSlice)+2:end);
@@ -13,7 +14,7 @@ function EventsBinXL(EventData, currSlice, sliceCells, sliceFile)
             EventsBinTotals{k}  = sum([EventData(sliceCells(k)).EventsPerBin.events]);
             TotalCells = TotalCells + 1;
         else
-            EventsBinValues(:,k) = num2cell(nan(numel({EventData(sliceCells(1)).EventsPerBin.bins}),1));
+            EventsBinValues(:,k) = num2cell(nan(numel({EventData(sliceCells(firstFullCell(1))).EventsPerBin.bins}),1));
             EventsBinTotals{k}  = NaN;
         end
     end

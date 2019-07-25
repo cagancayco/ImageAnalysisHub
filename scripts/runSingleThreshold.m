@@ -1,6 +1,5 @@
 function EventData = runSingleThreshold(app, EventData)
 
-plotThresholdFit = app.PlotfitwithPreviewCheckBox.Value;
 
 if app.PooledButton.Value && ~strcmp(app.ThresholdingMethodsButtonGroup.SelectedObject.Text,'Manual')
     thresholdGroup = 'Pooled_';

@@ -1,9 +1,10 @@
 function FrequencyBinXL(EventData, currSlice, sliceCells, sliceFile)
     FreqBinHeaders = cell(1,numel(sliceCells));
-    FreqBinValues  = cell(numel([EventData(sliceCells(1)).FrequencyPerBin.frequency]),numel(sliceCells));
+    firstFullCell = find(~cellfun(@isempty,{EventData(sliceCells).EventsPerBin}));
+    FreqBinValues  = cell(numel([EventData(sliceCells(firstFullCell(1))).FrequencyPerBin.frequency]),numel(sliceCells));
     FreqBinTotals  = cell(1,numel(sliceCells));
             
-    FreqBins = [{'Bins'};{EventData(sliceCells(1)).FrequencyPerBin.bins}'];
+    FreqBins = [{'Bins'};{EventData(sliceCells(firstFullCell(1))).FrequencyPerBin.bins}'];
     TotalCells = 0; 
     for k = 1:numel(sliceCells)
         FreqBinHeaders{k}  = EventData(sliceCells(k)).cellName(length(currSlice)+2:end);
@@ -12,7 +13,7 @@ function FrequencyBinXL(EventData, currSlice, sliceCells, sliceFile)
             FreqBinTotals{k}  = mean([EventData(sliceCells(k)).FrequencyPerBin.frequency]);
             TotalCells = TotalCells + 1;
         else
-            FreqBinValues(:,k) = num2cell(nan(numel({EventData(sliceCells(1)).FrequencyPerBin.bins}),1));
+            FreqBinValues(:,k) = num2cell(nan(numel({EventData(sliceCells(firstFullCell(1))).FrequencyPerBin.bins}),1));
             FreqBinTotals{k}  = NaN;
         end
     end

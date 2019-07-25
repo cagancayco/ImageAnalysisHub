@@ -43,7 +43,7 @@ function [model0, model1, pdfModel2, pdfModel3, pdfModel4, outparams] = fit_IEI 
 % 2018-07-30 - Added zScoreCutoff and thresholdModel1
 
 %% Parameters
-nPoints = 500;                      % number of points for plotting pdfs
+nPoints = 5000;                      % number of points for plotting pdfs
 defaultLineWidth = 2;               % default line width for plots
 linewidthLines = 0.5;               % line width for lines
 colorHist = 'k';                    % color of histogram
@@ -141,10 +141,11 @@ meanSmallIEI = mean(lessThanMean);
 %   ("Identification of bursts in spike trains")
 % nBins = round(sqrt(npts));
 nBins = round(1.87 * (npts - 1) ^ 0.4);
-
+%nBins = 358;
 % Compute histogram edges, area, and x values for fit pdf
-edges = linspace(xLimits(1), xLimits(2), nBins);
-binWidth = xLimits(2)/nBins;        % bin width
+%edges = linspace(xLimits(1), xLimits(2), nBins);
+edges = 0:0.25:400;%xLimits(1):0.25:xLimits(2);
+binWidth = 0.25;%xLimits(2)/nBins;        % bin width
 harea = binWidth * npts;            % total histogram area
 x = linspace(xLimits(1), xLimits(2), nPoints)';
 
